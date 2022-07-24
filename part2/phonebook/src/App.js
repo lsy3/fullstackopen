@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personsService from './services/persons'
 
 const Filter = ({value, onChange}) => {
   return (
@@ -24,16 +24,27 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, addNumber}) 
   )
 }
 
-const Person = ({ name, number }) => {
+const Person = ({ name, number, deleteOnClick }) => {
   return (
-    <>{name} {number}<br/></>
+    <>{name} {number}
+      <button onClick={deleteOnClick}>delete</button>
+      <br />
+    </>
   )
 }
 
-const Persons = ({ persons }) => {
+const Persons = ({ persons, setPersons }) => {
   return (
     <>
-      {persons.map((p, i) => <Person key={p.id} name={p.name} number={p.number} />)}
+      {persons.map((p, i) =>
+        <Person key={p.id} name={p.name} number={p.number}
+          deleteOnClick={() => {
+            if (window.confirm(`Delete ${p.name}?`)) {
+              personsService.remove(p.id).then(data => {
+                setPersons(persons.filter(p2 => p2.id !== p.id))
+              })
+            }
+          }} />)}
     </>
   )
 }
@@ -45,20 +56,24 @@ const App = () => {
   const [filterValue, setFilterValue] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personsService.getAll().then(ps => { setPersons(ps) })
   }, [])
 
   const addNumber = (event) => {
     event.preventDefault()
+
     let idx = persons.findIndex((x) => x.name === newName)
     if (idx === -1) {
-      setPersons(persons.concat({ name: newName, number: newNumber, id: persons.length+1 }))
+      let newPerson = { name: newName, number: newNumber, id: persons.length + 1 }
+      personsService.create(newPerson).then(np => { setPersons(persons.concat(np)) })
     } else {
-      alert(`${newName} is already added to phonebook`)
+      // alert(`${newName} is already added to phonebook`)
+      let newPerson = {...persons[idx], number: newNumber }
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        personsService.update(newPerson.id, newPerson).then(data => {
+          setPersons(persons.map(p => (p.id !== newPerson.id) ? p : newPerson))
+        })
+      }
     }
   }
 
@@ -75,7 +90,7 @@ const App = () => {
       <PersonForm newName={newName} setNewName={setNewName}
         newNumber={newNumber} setNewNumber={setNewNumber} addNumber={addNumber} />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons()} />
+      <Persons persons={filteredPersons()} setPersons={setPersons} />
     </div>
   )
 }
