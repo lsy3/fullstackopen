@@ -49,11 +49,24 @@ const Persons = ({ persons, setPersons }) => {
   )
 }
 
+const Notification = ({ message, isError }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className={(isError) ? 'error' : 'success'}>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
+  const [notif, setNotif] = useState({message: null})
 
   useEffect(() => {
     personsService.getAll().then(ps => { setPersons(ps) })
@@ -65,13 +78,26 @@ const App = () => {
     let idx = persons.findIndex((x) => x.name === newName)
     if (idx === -1) {
       let newPerson = { name: newName, number: newNumber, id: persons.length + 1 }
-      personsService.create(newPerson).then(np => { setPersons(persons.concat(np)) })
+      personsService
+        .create(newPerson)
+        .then(np => {
+          setPersons(persons.concat(np))
+          setNotif({ message: `Added ${newName}`, isError: false })
+          setTimeout(() => setNotif({ message: null}), 5000)
+        })
     } else {
       // alert(`${newName} is already added to phonebook`)
       let newPerson = {...persons[idx], number: newNumber }
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        personsService.update(newPerson.id, newPerson).then(data => {
+        personsService.update(newPerson).then(data => {
           setPersons(persons.map(p => (p.id !== newPerson.id) ? p : newPerson))
+          setNotif({ message: `Updated ${newName}`, isError: false })
+          setTimeout(() => setNotif({ message: null }), 5000)
+        })
+        .catch(error => {
+          setPersons(persons.filter(p => (p.id !== newPerson.id)))
+          setNotif({ message: `Information of ${newName} has already been removed from server`, isError: true })
+          setTimeout(() => setNotif({ message: null }), 5000)
         })
       }
     }
@@ -85,6 +111,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notif.message} isError={notif.isError} />
       <Filter value={filterValue} onChange={(event) => setFilterValue(event.target.value)} />
       <h3>add a new</h3>
       <PersonForm newName={newName} setNewName={setNewName}
