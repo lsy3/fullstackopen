@@ -85,6 +85,11 @@ const App = () => {
           setNotif({ message: `Added ${newName}`, isError: false })
           setTimeout(() => setNotif({ message: null}), 5000)
         })
+        .catch(error => {
+          // this is the way to access the error message
+          console.log(error.response.data.error)
+          setNotif({ message: error.response.data.error, isError: true })
+        })
     } else {
       // alert(`${newName} is already added to phonebook`)
       let newPerson = {...persons[idx], number: newNumber }
@@ -95,8 +100,8 @@ const App = () => {
           setTimeout(() => setNotif({ message: null }), 5000)
         })
         .catch(error => {
-          setPersons(persons.filter(p => (p.id !== newPerson.id)))
-          setNotif({ message: `Information of ${newName} has already been removed from server`, isError: true })
+          // setPersons(persons.filter(p => (p.id !== newPerson.id)))
+          setNotif({ message: error.response.data.error, isError: true })
           setTimeout(() => setNotif({ message: null }), 5000)
         })
       }
