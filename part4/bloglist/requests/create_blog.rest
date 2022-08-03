@@ -1,4 +1,4 @@
-POST http://localhost:3003/api/blog
+POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
@@ -10,4 +10,16 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3003/api/blog
+GET http://localhost:3003/api/blogs
+
+###
+
+PUT http://localhost:3003/api/blogs/5a422bc61b54a676234d17fc
+content-type: application/json
+
+{
+  "title": "Tsanak 2",
+  "author": "Liam Sy",
+  "url": "ab",
+  "likes": 10
+}
