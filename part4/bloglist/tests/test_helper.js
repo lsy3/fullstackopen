@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const initialBlogs = [
   {
@@ -6,6 +7,7 @@ const initialBlogs = [
     title: 'React patterns',
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
+    user: '62ebca6aedf1ea8f44dc0f2b',
     likes: 7,
     __v: 0
   },
@@ -39,6 +41,7 @@ const initialBlogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
+    user: '62ebca6aedf1ea8f44dc0f2b',
     __v: 0
   },
   {
@@ -47,7 +50,21 @@ const initialBlogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
+    user: '62ebca6aedf1ea8f44dc0f2b',
     __v: 0
+  }
+]
+
+const initialUsers = [
+  {
+    _id: '62ebc71184b76af587cfd541',
+    username: 'root',
+    name: 'root',
+    password: 'sekret',
+    blogs: [
+      '5a422ba71b54a676234d17fb',
+      '5a422bc61b54a676234d17fc'
+    ]
   }
 ]
 
@@ -64,6 +81,12 @@ const blogsInDb = async () => {
   return blogs.map(b => b.toJSON())
 }
 
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(b => b.toJSON())
+}
+
 module.exports = {
-  initialBlogs, nonExistingId, blogsInDb
+  initialBlogs, nonExistingId, blogsInDb,
+  initialUsers, usersInDb
 }

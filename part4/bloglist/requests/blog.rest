@@ -1,0 +1,53 @@
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+  "title": "Tsanak 2",
+  "author": "Liam Sy",
+  "url": "ab",
+  "likes": 5
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyZWJjYTZhZWRmMWVhOGY0NGRjMGYyYiIsImlhdCI6MTY1OTYyMDkwMn0.E-6dXr-Dn_afL40k3epC9Bycd8_FvVDTLYJGhfjpgKU
+
+{
+  "title": "Tsanak 2",
+  "author": "Liam Sy",
+  "url": "ab",
+  "likes": 5
+}
+
+###
+
+GET http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyZWJjYTZhZWRmMWVhOGY0NGRjMGYyYiIsImlhdCI6MTY1OTYyMDkwMn0.E-6dXr-Dn_afL40k3epC9Bycd8_FvVDTLYJGhfjpgKU
+
+###
+
+PUT http://localhost:3003/api/blogs/5a422bc61b54a676234d17fc
+content-type: application/json
+
+{
+  "title": "Tsanak 2",
+  "author": "Liam Sy",
+  "url": "ab",
+  "likes": 10
+}
+
+###
+
+DELETE http://localhost:3003/api/blogs/5a422b891b54a676234d17fa
+
+###
+
+DELETE http://localhost:3003/api/blogs/5a422b891b54a676234d17fa
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyZWJjYTZhZWRmMWVhOGY0NGRjMGYyYiIsImlhdCI6MTY1OTYyMDkwMn0.E-6dXr-Dn_afL40k3epC9Bycd8_FvVDTLYJGhfjpgKU
+
+###
+
+DELETE http://localhost:3003/api/blogs/62ebce507ef18f64f1ec777d
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyZWJjYTZhZWRmMWVhOGY0NGRjMGYyYiIsImlhdCI6MTY1OTYyMDkwMn0.E-6dXr-Dn_afL40k3epC9Bycd8_FvVDTLYJGhfjpgKU
