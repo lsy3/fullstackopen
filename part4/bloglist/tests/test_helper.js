@@ -16,6 +16,7 @@ const initialBlogs = [
     title: 'Go To Statement Considered Harmful',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+    user: '62ebca6aedf1ea8f44dc0f2b',
     likes: 5,
     __v: 0
   },
@@ -24,6 +25,7 @@ const initialBlogs = [
     title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+    user: '62ebca6aedf1ea8f44dc0f2b',
     likes: 12,
     __v: 0
   },
@@ -32,6 +34,7 @@ const initialBlogs = [
     title: 'First class tests',
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+    user: '62ebca6aedf1ea8f44dc0f2b',
     likes: 10,
     __v: 0
   },
