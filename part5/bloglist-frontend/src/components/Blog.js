@@ -31,7 +31,7 @@ const Blog = ({ inputBlog, deleteHandler, likeHandler }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div>
         {blog.title} {blog.author}
       </div>
